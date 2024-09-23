@@ -1,95 +1,77 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
 
-export default function Home() {
+import { useState, useEffect } from 'react';
+import { useGetTodosQuery } from '../store/todoApi';
+import { Todo } from '../store/todoApi';
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
+import TodoForm from '../components/TodoForm';
+
+const TodosPage = () => {
+  const [page, setPage] = useState(1);
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const { data: fetchedTodos, isLoading } = useGetTodosQuery({ start: (page - 1) * 10, limit: 10 });
+
+  useEffect(() => {
+    if (fetchedTodos) {
+      setTodos(fetchedTodos);
+    }
+  }, [fetchedTodos]);
+
+  const handleAddTodo = (newTodo: Todo) => {
+    setTodos((prevTodos) => [...prevTodos, newTodo]);
+  };
+
+  if (isLoading) return <div className="text-center">Loading...</div>;
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <h1 className="text-3xl font-bold mb-6 text-center">Todo List</h1>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      {/* Form untuk menambah Todo */}
+      <TodoForm onAddTodo={handleAddTodo} />
+
+      {/* Tabel Todo */}
+      <div className="overflow-x-auto w-full max-w-2xl">
+        <table className="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th className="text-center">Title</th>
+              <th className="text-center">Completed</th>
+            </tr>
+          </thead>
+          <tbody>
+            {todos.map((todo) => (
+              <tr key={todo.id}>
+                <td className="text-center">{todo.title}</td>
+                <td className="text-center">
+                  {todo.completed ? (
+                    <AiOutlineCheckCircle className="text-green-500 text-2xl inline-block" />
+                  ) : (
+                    <AiOutlineCloseCircle className="text-red-500 text-2xl inline-block" />
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="mt-6 space-x-4">
+        <button
+          className="btn btn-primary"
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          Previous
+        </button>
+        <button className="btn btn-primary" onClick={() => setPage(page + 1)}>
+          Next
+        </button>
+      </div>
     </div>
   );
-}
+};
+
+export default TodosPage;
