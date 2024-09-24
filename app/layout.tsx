@@ -1,15 +1,32 @@
-import './globals.css'; // Jika ada style global
-import { Providers } from './providers'; // Import Providers
+import './globals.css';
+import { Providers } from './providers';
+import type { Metadata } from "next";
+import localFont from "next/font/local";
 
-export const metadata = {
-  title: 'Todo App',
-  description: 'Todo App using Next.js and RTK Query',
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+});
+
+export const metadata: Metadata = {
+  title: 'Todo List App',
+  description: 'Todo List App using Next.js and RTK Query',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en" className="dark">
-      <body>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

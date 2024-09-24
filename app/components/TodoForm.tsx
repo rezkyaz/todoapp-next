@@ -42,7 +42,7 @@ const TodoForm = ({ onAddTodo }: TodoFormProps) => {
         placeholder="Add new todo"
         className="input input-bordered w-full max-w-xs mb-4"
       />
-      <button type="submit" className="btn btn-success">
+      <button type="submit" className="btn btn-primary">
         Add Todo
       </button>
     </form>

@@ -1,7 +1,7 @@
 'use client'; // Tambahkan ini untuk client-side code
 
 import { Provider } from 'react-redux';
-import { store } from '../store/store';
+import { store } from './store/store';
 
 interface ProvidersProps {
   children: React.ReactNode;
