@@ -1,11 +1,11 @@
 # Todo List App
 
-Todo List App built using Next.js and tailwind css with DaisyUI.
+Todo List App built using Next.js 14 and Tailwind CSS with DaisyUI.
 Its a very basic todo list app.
 
 ## Getting Started
 
-First, run the development server:
+First, run with production mode:
 
 ```bash
 npm run build
@@ -31,9 +31,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about this project, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Tailwind CSS](https://tailwindcss.com/docs) - documentation of Tailwind CSS
+- [DaisyUI](https://daisyui.com/docs) - documentation of DaisyUI
+- [Redux Toolkit](https://redux-toolkit.js.org/introduction/getting-started) - learn API fetch with Redux Toolkit
