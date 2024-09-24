@@ -1,6 +1,6 @@
 # Todo List App
 
-Todo List App built using Next.js 14 and Tailwind CSS with DaisyUI.
+Todo List App built using Next.js 14 with Tailwind CSS and DaisyUI.
 Its a very basic todo list app.
 
 ## Getting Started
